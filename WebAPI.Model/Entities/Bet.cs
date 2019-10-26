@@ -11,6 +11,5 @@ namespace WebAPI.Model.Entities
         public string Type { get; set; }
         public string Score { get; set; }
         public int GameID { get; set; }
-        public Game Game { get; set; }
     }
 }

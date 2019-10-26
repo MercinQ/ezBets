@@ -8,8 +8,7 @@ namespace WebAPI.Model
         public DbSet<Game> Game { get; set; }
         public DbSet<Bet> Bets { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-            => optionsBuilder.UseNpgsql("Host=localhost;Database=ez_bet;Username=postgres;Password=test");
+        public EzBetDbContext(DbContextOptions<EzBetDbContext> options) : base(options) { }       
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
