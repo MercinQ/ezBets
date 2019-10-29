@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using WebAPI.Model;
 using WebAPI.Model.Entities;
 
@@ -12,13 +14,29 @@ namespace WebAPI.Controllers
     [ApiController]
     public class BetController : ControllerBase
     {
+        private readonly IConfiguration configuration;
+        private readonly string connectionString;
+        private readonly DbContextOptionsBuilder<EzBetDbContext> optionsBuilder;
+        private readonly DbContextOptions<EzBetDbContext> contextOptions;
+
+        public BetController(IConfiguration configuration)
+        {
+            //TODO: DI
+            this.configuration = configuration;
+            this.optionsBuilder = new DbContextOptionsBuilder<EzBetDbContext>();
+            this.connectionString = configuration.GetConnectionString("EzBetConnectionString");
+            this.optionsBuilder.UseNpgsql(connectionString);
+            this.contextOptions = optionsBuilder.Options;
+        }
+
         // GET api/bet
         [HttpGet]
         public ActionResult<IEnumerable<Bet>> Get()
         {
-            using (var dbContext = new EzBetDbContext())
+            using (var dbContext = new EzBetDbContext(contextOptions))
             {
-                return dbContext.Bets.ToList();
+                var bets = dbContext.Bets.ToList();
+                return bets;
             }
         }
 
@@ -26,7 +44,7 @@ namespace WebAPI.Controllers
         [HttpGet("{id}")]
         public ActionResult<Bet> Get(int id)
         {
-            using (var dbContext = new EzBetDbContext())
+            using (var dbContext = new EzBetDbContext(contextOptions))
             {
                 var bet = dbContext.Find<Bet>(id);
                 if (bet == null)
@@ -53,7 +71,7 @@ namespace WebAPI.Controllers
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            using (var dbContext = new EzBetDbContext())
+            using (var dbContext = new EzBetDbContext(contextOptions))
             {
                 var betToDelete = dbContext.Find<Bet>(id);
                 dbContext.Remove(betToDelete);
