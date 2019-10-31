@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using WebAPI.Model;
 using WebAPI.Model.Entities;
+using WebAPI.Repository;
 
 namespace WebAPI.Controllers
 {
@@ -14,68 +10,47 @@ namespace WebAPI.Controllers
     [ApiController]
     public class BetController : ControllerBase
     {
-        private readonly IConfiguration configuration;
-        private readonly string connectionString;
-        private readonly DbContextOptionsBuilder<EzBetDbContext> optionsBuilder;
-        private readonly DbContextOptions<EzBetDbContext> contextOptions;
+        private readonly IBetRepository _betRepository;
 
-        public BetController(IConfiguration configuration)
+        public BetController(IBetRepository betRepository)
         {
-            //TODO: DI
-            this.configuration = configuration;
-            this.optionsBuilder = new DbContextOptionsBuilder<EzBetDbContext>();
-            this.connectionString = configuration.GetConnectionString("EzBetConnectionString");
-            this.optionsBuilder.UseNpgsql(connectionString);
-            this.contextOptions = optionsBuilder.Options;
+            _betRepository = betRepository;
         }
 
         // GET api/bet
         [HttpGet]
         public ActionResult<IEnumerable<Bet>> Get()
         {
-            using (var dbContext = new EzBetDbContext(contextOptions))
-            {
-                var bets = dbContext.Bets.ToList();
-                return bets;
-            }
+            return _betRepository.GetAll().ToList();
         }
 
         // GET api/bet/5
         [HttpGet("{id}")]
         public ActionResult<Bet> Get(int id)
         {
-            using (var dbContext = new EzBetDbContext(contextOptions))
+            var bet = _betRepository.GetById(id);
+            if (bet == null)
             {
-                var bet = dbContext.Find<Bet>(id);
-                if (bet == null)
-                {
-                    return NotFound();
-                }
-                return bet;
+                return NotFound();
             }
+            return bet;
         }
 
         // POST api/bet
         [HttpPost]
-        public void Post([FromBody] Bet value)
+        public void Post([FromBody] Bet bet)
         {
-        }
-
-        // PUT api/bet/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] Bet value)
-        {
+            if (bet.Id == 0)
+                _betRepository.Create(bet);
+            else
+                _betRepository.Update(bet);
         }
 
         // DELETE api/bet/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            using (var dbContext = new EzBetDbContext(contextOptions))
-            {
-                var betToDelete = dbContext.Find<Bet>(id);
-                dbContext.Remove(betToDelete);
-            }
+            _betRepository.Delete(id);
         }
     }
 }

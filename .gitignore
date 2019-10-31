@@ -32,3 +32,4 @@
 */**/bin/Release
 */**/obj/Debug
 */**/obj/Release
+/WebAPI/WebAPI.csproj.user
