@@ -6,10 +6,10 @@ namespace WebAPI.Model.Entities
 {
     public class Bet
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public string Type { get; set; }
         public string Score { get; set; }
-        public int GameID { get; set; }
+        public int GameId { get; set; }
     }
 }

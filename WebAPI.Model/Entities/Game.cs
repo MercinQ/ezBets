@@ -5,7 +5,7 @@ namespace WebAPI.Model.Entities
 {
     public class Game
     {
-        public int ID { get; set; }
+        public int Id { get; set; }
         public string Name { get; set; }
         public DateTime BetStartDate { get; set; }
         public DateTime BetEndDate { get; set; }

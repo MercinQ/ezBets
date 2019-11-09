@@ -8,7 +8,8 @@ namespace WebAPI.Model.Entities
         public void Configure(EntityTypeBuilder<Game> builder)
         {
             builder.ToTable("game");
-            builder.HasKey(c => c.ID);
+            builder.HasKey(c => c.Id);
+            builder.Property(c => c.Id).HasColumnName("ID");
             builder.Property(c => c.Name).HasMaxLength(255);
             builder.Property(c => c.BetStartDate);
             builder.Property(c => c.BetEndDate);

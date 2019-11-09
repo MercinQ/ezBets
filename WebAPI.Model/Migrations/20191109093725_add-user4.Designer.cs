@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WebAPI.Model;
@@ -9,9 +10,10 @@ using WebAPI.Model;
 namespace WebAPI.Model.Migrations
 {
     [DbContext(typeof(EzBetDbContext))]
-    partial class EzBetDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191109093725_add-user4")]
+    partial class adduser4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

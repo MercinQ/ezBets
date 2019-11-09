@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using WebAPI.Model;
@@ -9,9 +10,10 @@ using WebAPI.Model;
 namespace WebAPI.Model.Migrations
 {
     [DbContext(typeof(EzBetDbContext))]
-    partial class EzBetDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191109083944_add-user3")]
+    partial class adduser3
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -69,9 +71,9 @@ namespace WebAPI.Model.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnName("ID");
 
-                    b.Property<string>("Password");
+                    b.Property<string>("Hash");
 
-                    b.Property<string>("Salt");
+                    b.Property<string>("Password");
 
                     b.Property<string>("Username")
                         .HasMaxLength(255);
