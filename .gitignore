@@ -34,3 +34,6 @@
 */**/obj/Debug
 */**/obj/Release
 /WebAPI/WebAPI.csproj.user
+bin
+obj
+packages
