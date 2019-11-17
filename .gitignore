@@ -37,3 +37,8 @@
 bin
 obj
 packages
+/WebAPI.Model/obj/WebAPI.Model.csproj.nuget.cache
+/WebAPI/obj/WebAPI.csproj.nuget.cache
+/WebAPI/obj/WebAPI.csproj.nuget.dgspec.json
+/WebAPI/obj/WebAPI.csproj.nuget.g.targets
+/WebAPI/obj/project.assets.json
