@@ -23,6 +23,7 @@ namespace ezBet.WebAPI
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
             services.AddEntityFrameworkNpgsql().AddDbContext<EzBetDbContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("EzBetConnectionString"), b => b.MigrationsAssembly("ezBet.WebAPI.Model")), ServiceLifetime.Scoped);
             services.AddScoped<IBetRepository, BetRepository>();
+            services.AddScoped<IUserService, UserService>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
