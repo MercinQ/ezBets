@@ -24,6 +24,6 @@
 7. Run nginx: 
 	-sudo nginx-t
 	-sudo service nginx start
-8. Execute command: dotnet publish na Windowsie
+8. Execute command: dotnet publish on Windows
 9. Copy compiled files from windows->linux using WinSCP app
 10. execute: dotnet WebAPI.dll
